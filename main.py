@@ -152,7 +152,7 @@ class GenerateRequest(BaseModel):
     model: Optional[str] = None
     provider: Optional[str] = None
     negative_prompt: Optional[str] = None
-    num_frames: Optional[int] = Field(default=None, ge=8, le=200)
+    num_frames: Optional[int] = Field(default=None, ge=8, le=1440)
     num_inference_steps: Optional[int] = Field(default=None, ge=1, le=100)
     guidance_scale: Optional[float] = Field(default=None, ge=1.0, le=20.0)
     seed: Optional[int] = None
