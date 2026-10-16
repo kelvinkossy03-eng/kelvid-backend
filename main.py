@@ -137,7 +137,9 @@ def _save_video_bytes(video_bytes, out_path: Path) -> None:
 app = FastAPI(title="Kelvid API", version=APP_VERSION)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=CORS_ORIGINS,
+    allow_origins=[
+        "https://kelvid-frontend-qu89.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
