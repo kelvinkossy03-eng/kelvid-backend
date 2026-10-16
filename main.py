@@ -138,7 +138,7 @@ app = FastAPI(title="Kelvid API", version=APP_VERSION)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://kelvid-frontend-qu89.vercel.app",
+        "https://kelvid-frontend-ten.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
