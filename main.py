@@ -135,14 +135,22 @@ def _save_video_bytes(video_bytes, out_path: Path) -> None:
         out_path.write_bytes(bytes(video_bytes))
 
 app = FastAPI(title="Kelvid API", version=APP_VERSION)
+# Origins come from CORS_ORIGINS (comma separated, or "*"). The production
+# Vercel app and local dev are always allowed, and so are Vercel preview URLs.
+_DEFAULT_ORIGINS = [
+    "https://kelvid-frontend-ten.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+_allow_origins = ["*"] if CORS_ORIGINS == ["*"] else sorted(set(CORS_ORIGINS + _DEFAULT_ORIGINS))
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://kelvid-frontend-ten.vercel.app",
-    ],
-    allow_credentials=True,
+    allow_origins=_allow_origins,
+    allow_origin_regex=r"https://kelvid-frontend[a-z0-9-]*\.vercel\.app",
+    allow_credentials=False,  # the API uses an X-API-Key header, not cookies
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 app.mount("/videos", StaticFiles(directory=str(OUTPUT_DIR)), name="videos")
 
